@@ -3,4 +3,4 @@ include LICENSE
 include README.md
 include HISTORY.md
 
-recursive-include b_aws_cdk_parallel *.py
+recursive-include b_aws_dynamodb_backup *.py
