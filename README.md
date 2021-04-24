@@ -50,7 +50,11 @@ pip install .
 
 ### Usage & Examples
 
-The library exposes cli commands.
+The library uses boto3 AWS SDK for interacting with AWS environment. Hence,
+environmental credentials (such as `aws_access_key_id`, `aws_secret_access_key`, and `region_name`)
+are required.
+
+The library exposes cli commands. Read more about them down below.
 
 ##### dyseed
 
@@ -65,7 +69,11 @@ Seeds your table with random data.
 Backups your whole table(s).
 
 ```shell
+# Single table.
 > dyback TableName
+
+# All tables.
+> dyback 
 ```
 
 ##### dyrest
@@ -73,7 +81,11 @@ Backups your whole table(s).
 Restores your whole table(s).
 
 ```shell
+# Single table.
 > dyrest TableName
+
+# All tables.
+> dyrest
 ```
 
 ### Testing

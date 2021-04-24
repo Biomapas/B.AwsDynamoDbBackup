@@ -2,6 +2,8 @@ import json
 from typing import Any, Dict, List, Optional
 from pathlib import Path
 
+from b_aws_dynamodb_backup.exceptions.database_not_found import DatabaseNotFound
+
 from b_aws_dynamodb_backup.color_print import cprint
 from b_aws_dynamodb_backup.db_actions.base_db_action import BaseDbAction
 from b_aws_dynamodb_backup.print_colors import PrintColors
@@ -34,7 +36,7 @@ class DownloadDb(BaseDbAction):
                 response: Dict[Any, Any] = self.client.scan(**kwargs)
             except self.client.exceptions.ResourceNotFoundException:
                 cprint(PrintColors.FAIL, 'Table not found!')
-                return
+                raise DatabaseNotFound()
 
             items: List[Dict[Any, Any]] = response['Items']
             count: int = response['Count']

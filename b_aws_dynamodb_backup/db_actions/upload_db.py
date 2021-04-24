@@ -3,6 +3,8 @@ from typing import Optional
 from os import listdir
 from os.path import isfile, join
 
+from b_aws_dynamodb_backup.exceptions.backup_not_found import BackupNotFound
+
 from b_aws_dynamodb_backup.color_print import cprint
 from b_aws_dynamodb_backup.db_actions.base_db_action import BaseDbAction
 from b_aws_dynamodb_backup.print_colors import PrintColors
@@ -20,6 +22,7 @@ class UploadDb(BaseDbAction):
 
         if len(file_paths) < 1:
             cprint(PrintColors.FAIL, f'Directory ({backups_dir}) does not contain any backup files!')
+            raise BackupNotFound()
 
         for file in file_paths:
             with open(file, 'r') as data_file:

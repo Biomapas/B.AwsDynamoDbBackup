@@ -17,7 +17,7 @@ class BaseDbAction:
 
     @classmethod
     def default_directory(cls, table_name: str) -> str:
-        return f'./{table_name}'
+        return f'./backups/{table_name}'
 
     @classmethod
     def batch_put_items(cls, items: List[Any]) -> Iterator[Any]:
