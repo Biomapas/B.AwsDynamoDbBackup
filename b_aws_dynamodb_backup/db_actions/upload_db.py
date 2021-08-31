@@ -1,13 +1,13 @@
 import json
-from typing import Optional
 from os import listdir
 from os.path import isfile, join
-
-from b_aws_dynamodb_backup.exceptions.backup_not_found import BackupNotFound
+from typing import Optional
 
 from b_aws_dynamodb_backup.color_print import cprint
 from b_aws_dynamodb_backup.db_actions.base_db_action import BaseDbAction
+from b_aws_dynamodb_backup.exceptions.backup_not_found import BackupNotFound
 from b_aws_dynamodb_backup.print_colors import PrintColors
+from b_aws_dynamodb_backup.util.dynamodb_serializer import DynamoDbSerializer
 
 
 class UploadDb(BaseDbAction):
@@ -28,6 +28,10 @@ class UploadDb(BaseDbAction):
             with open(file, 'r') as data_file:
                 data = data_file.read()
                 data = json.loads(data)
+
+                # Ensure strings (that were bytes) from backup are converted back to bytes.
+                for item in data:
+                    DynamoDbSerializer.deserialize_bytes(item)
 
                 put_items = [self.create_put_item(item) for item in data]
 

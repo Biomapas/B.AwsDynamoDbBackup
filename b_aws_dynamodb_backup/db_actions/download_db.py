@@ -1,12 +1,12 @@
 import json
-from typing import Any, Dict, List, Optional
 from pathlib import Path
-
-from b_aws_dynamodb_backup.exceptions.database_not_found import DatabaseNotFound
+from typing import Any, Dict, List, Optional
 
 from b_aws_dynamodb_backup.color_print import cprint
 from b_aws_dynamodb_backup.db_actions.base_db_action import BaseDbAction
+from b_aws_dynamodb_backup.exceptions.database_not_found import DatabaseNotFound
 from b_aws_dynamodb_backup.print_colors import PrintColors
+from b_aws_dynamodb_backup.util.dynamodb_serializer import DynamoDbSerializer
 
 
 class DownloadDb(BaseDbAction):
@@ -44,6 +44,10 @@ class DownloadDb(BaseDbAction):
 
             if count == 0:
                 break
+
+            # Ensure bytes from dynamodb are json serializable.
+            for item in items:
+                DynamoDbSerializer.serialize_bytes(item)
 
             with open(f'{download_dir}/{self.create_backup_file_name(iteration)}', 'a') as file:
                 file.write(json.dumps(items))

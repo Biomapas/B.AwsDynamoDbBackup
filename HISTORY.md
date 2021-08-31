@@ -1,5 +1,8 @@
 # Release history
 
+### 1.1.0
+* Handle byte types.
+
 ### 1.0.0
 * Allow to back up all tables.
 * Allow to restore all tables.
