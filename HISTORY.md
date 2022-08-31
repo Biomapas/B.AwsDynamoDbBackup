@@ -1,5 +1,8 @@
 # Release history
 
+### 1.1.1
+* Fix DynamoDB backup chunks all being written in the same file.
+
 ### 1.1.0
 * Handle byte types.
 

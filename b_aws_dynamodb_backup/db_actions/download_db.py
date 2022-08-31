@@ -23,11 +23,13 @@ class DownloadDb(BaseDbAction):
         Path(download_dir).mkdir(parents=True, exist_ok=True)
 
         continuation_key = None
-        iteration = 1
+        iteration = 0
 
         cprint(PrintColors.OKBLUE, f'Downloading {table_name} table...')
 
         while True:
+            iteration += 1
+
             kwargs = dict(TableName=table_name)
             if continuation_key:
                 kwargs['ExclusiveStartKey'] = continuation_key

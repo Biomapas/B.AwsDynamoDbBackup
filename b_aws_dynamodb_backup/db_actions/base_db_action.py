@@ -9,7 +9,7 @@ class BaseDbAction:
 
     @classmethod
     def create_backup_file_name(cls, iteration: int) -> str:
-        return f'backup-chunk{iteration}.json'
+        return f'backup-chunk-{iteration}.json'
 
     @classmethod
     def is_backup_file(cls, file_name: str) -> bool:
